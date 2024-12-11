@@ -14,6 +14,7 @@
                 <img src="{{ asset('storage/' . $movie->image) }}" alt="{{ $movie->title }}">
 
             @endif
+
             
             
             <div>
@@ -21,7 +22,15 @@
                 Genre:({{ $movie->genre }})<br>
                 Rating: {{ $movie->rating }} / 10<br>
                 Dscripsi<em>{{ $movie->description }}</em>
+                <<form action="{{ route('movie.destroy', $movie->id) }}" method="POST" style="display:inline;">
+    @csrf
+    @method('DELETE')
+    <button type="submit">Hapus</button>
+</form>
+
             </div>
+            
+
         </li>
         @endforeach
     </ul>

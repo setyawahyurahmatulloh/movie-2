@@ -8,4 +8,5 @@ use Illuminate\Support\Facades\DB;
 Route::get('/movie', [MovieController::class, 'index']);
 Route::get('/movie/create', [MovieController::class, 'create']);
 Route::post('/movie', [MovieController::class, 'store']);
+Route::delete('/movie/hapus/{id}', [MovieController::class, 'destroy'])->name('movie.destroy');
 
