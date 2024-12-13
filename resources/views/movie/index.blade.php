@@ -21,12 +21,14 @@
                 Nama:<strong>{{ $movie->title }}</strong> 
                 Genre:({{ $movie->genre }})<br>
                 Rating: {{ $movie->rating }} / 10<br>
-                Dscripsi<em>{{ $movie->description }}</em>
+                Dscripsi:<em>{{ $movie->description }}</em>
                 <<form action="{{ route('movie.destroy', $movie->id) }}" method="POST" style="display:inline;">
-    @csrf
+
+        @csrf            
     @method('DELETE')
     <button type="submit">Hapus</button>
 </form>
+<a href="{{ route('movie.edit', $movie->id) }}">Edit</a>
 
             </div>
             

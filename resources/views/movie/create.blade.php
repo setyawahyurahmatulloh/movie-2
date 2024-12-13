@@ -10,9 +10,9 @@
 
         <div class="form-group">
      <label for="image">Gambar:</label>
-            <input type="file" name="image" id="image" class="@error('image') is-invalid @enderror">
-            @error('image')
-            <div class="alert">{{ $message }}</div>
+              <input type="file" name="image" id="image" class="@error('image') is-invalid @enderror">
+        @error('image')
+      <div class="alert">{{ $message }}</div>
             @enderror
         </div>
         <div class="form-group">
@@ -24,8 +24,8 @@
             <textarea name="description" id="description" rows="4" required></textarea>
         </div>
         <div class="form-group">
-            <label for="genre">Genre:</label>
-            <input type="text" name="genre" id="genre" required>
+     <label for="genre">Genre:</label>
+ <input type="text" name="genre" id="genre" required>
         </div>
         <div class="form-group">
             <label for="rating">Rating:</label>

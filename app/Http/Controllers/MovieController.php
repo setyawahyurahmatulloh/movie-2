@@ -21,22 +21,63 @@ class MovieController extends Controller
         return view('movie.create');
     }
 
+    public function edit($id)
+    {
+    
+        $movie = DB::table('movie')->where('id', $id)->first();
+    
+   
+        
+      
+        return view('movie.edit', ['movie' => $movie]);
+    }
+
+    public function update(Request $request, $id)
+{
+    $imagePath = null;
+
+    if ($request->hasFile('image')) {
+      
+        $movie = DB::table('movie')->where('id', $id)->first();
+        if ($movie && $movie->image) {
+            Storage::disk('public')->delete($movie->image);
+        }
+
+        $imagePath = $request->file('image')->store('images', 'public');
+    }
+
+   
+    
+
+    
+    DB::table('movie')->where('id', $id)->update([
+        'title' => $request->input('title'),
+        'description' => $request->input('description'),
+        'genre' => $request->input('genre'),
+        'rating' => $request->input('rating'),
+        'image' => $imagePath,
+        'updated_at' => now(),
+    ]);
+
+    return redirect('/movie');
+}
+
+    
+     
+
     public function store(Request $request)
     {
       
-        $request->validate([
-            'title' => 'required|string',
-            'description' => 'required|string',
-            'genre' => 'required|string',
-            'rating' => 'required|numeric',
-            'image' => 'nullable|image|mimes:png,jpg',
-        ]);
 
-       
-                    $imagePath = null;
-                    if ($request->hasFile('image')) {
-                        $imagePath = $request->file('image')->store('images', 'public');
-                    }
+        
+        $imagePath = null;
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'public');
+        }
+                   
+        
+                    
 
         DB::table('movie')->insert([
             'title' => $request->input('title'),
@@ -47,21 +88,30 @@ class MovieController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+                     
+
 
         return redirect('/movie');
     }
 
     public function destroy($id)
     {
-     
+      
+        $movie = DB::table('movie')->where('id', $id)->first();
 
-        {
+        if ($movie && $movie->image) {
+          
+            Storage::disk('public')->delete($movie->image);
+        }
+
+     
+        DB::table('movie')->where('id', $id)->delete();
    
-            DB::table('movie')->where('id', $id)->delete();
+          
 
             return redirect('/movie');
         }
 
        
     }
-}
+
